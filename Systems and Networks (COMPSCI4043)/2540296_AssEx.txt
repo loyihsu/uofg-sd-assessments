@@ -1,0 +1,99 @@
+; --- Assessed Exercise: Sigma 16 Assembly Language Programming ---
+;
+; This program calculates the sum of positive items (`possum`),
+; counts negative items (`negcount`), counts odd positive items (`oddcount`),
+; and detects overflow (`overflow`) of the sum of the positive items.
+;
+; Author: Yu-Sung Hsu
+; Email: 2540296H@student.gla.ac.uk
+; Student ID: 2540296H
+; COMPSCI4043 Systems and Networks Assessed Exercise
+;
+; The high level algorithm required is as follows:
+;    possum = 0;
+;    negcount = 0;
+;    oddcount = 0;
+;    overflow = 0;  // false
+;    for (i = 0; i < n; i++) {
+;         if (X[i] < 0) {
+;              negcount++;
+;         } else if (X[i] != 0) {
+;              possum += X[i];
+;              if (possum < 0) {
+;                   overflow = 1;  // true
+;              }
+;              if ((X[i] & 1) == 1) {
+;                   oddcount++;
+;              }
+;         }
+;    }
+
+; Usage of the registers:
+; R1 = possum
+; R2 = negcount
+; R3 = oddcount
+; R4 = overflow
+; R5 = n
+; R6 = i
+; R7 = (constant) 1
+; R8 = X[i]
+; R9 = temprary space for compare or bitwise and result
+
+; Initialisation
+     and   R1,R1,R0        ; R1 = possum, initialised to 0
+     and   R2,R2,R0        ; R2 = negcount, initialised to 0
+     and   R3,R3,R0        ; R3 = oddcount, initialised to 0
+     and   R4,R4,R0        ; R4 = overflow, initialised to 0
+     load  R5,n[R0]        ; R5 = n
+     and   R6,R6,R0        ; R6 = i, initialised to 0
+     cmpeq R7,R0,R0        ; R7 = (constant) 1
+; Main Loop for (i = 0; i < n; i++) 
+loop cmplt R9,R6,R5        ; R9 = i < n
+     jumpf R9,done[R0]     ; If not (i < n), exit the loop (jump to `done`).
+     load  R8,X[R6]        ; R8 = X[i]
+; Count negative items in the array.
+     cmplt R9,R8,R0        ; R9 = (X[i] < 0)
+     jumpf R9,else[R0]     ; If not (X[i] < 0), jump to `else`.
+     add   R2,R2,R7        ; negcount++
+     jump  incr[R0]        ; Skip `else` case.
+; Add positive items to `possum`. 
+else cmpeq R9,R8,R0        ; R9 = (X[i] == 0)
+     jumpt R9,incr[R0]     ; If (X[i] == 0), jump to `incr`.
+     add   R1,R1,R8        ; possum += X[i]
+; Detect overflow of `possum`.
+     cmplt R9,R1,R0        ; R9 = (possum < 0)
+     jumpf R9,oddc[R0]     ; If not (possum < 0), jump to `oddc`.
+     add   R4,R0,R7        ; overflow = 1
+; Count odd items in the array.
+oddc and   R9,R8,R7        ; R9 = X[i] & 1
+     cmpeq R9,R9,R7        ; R9 = ((X[i] & 1) == 1)
+     jumpf R9,incr[R0]     ; If not ((X[i] & 1) == 1), jump to `incr`.
+     add   R3,R3,R7        ; oddcount++
+; Incrementing the loop index i.
+incr add   R6,R6,R7        ; i++
+     jump  loop[R0]        ; Jump back to start of loop
+; Store results back to memory.
+done store R1,possum[R0]   ; Save R1 back to possum.
+     store R2,negcount[R0] ; Save R2 back to negcount.
+     store R3,oddcount[R0] ; Save R3 back to oddcount.
+     store R4,overflow[R0] ; Save R4 back to overflow.
+     trap  R0,R0,R0        ; Terminate
+
+; Data Area
+possum   data 0  ; The sum of positive items. Initialised to 0.
+negcount data 0  ; The count of negative items. Initialised to 0.
+oddcount data 0  ; The count of odd items. Initialised to 0.
+overflow data 0  ; The boolean to signify overflow.
+n        data 12 ; size of array X
+X        data 3
+         data -6
+         data 27
+         data 101
+         data 50
+         data 0
+         data -20
+         data -21
+         data 19
+         data 6
+         data 4
+         data -10

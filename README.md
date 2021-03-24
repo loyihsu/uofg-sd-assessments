@@ -7,3 +7,5 @@ The list includes:
 * Programming
   * Assessed Exercise 1 (`Java`)
   * Assessed Exercise 2 (`Java`)
+* Systems and Networks
+  * Assessed Exercise (HLL: `C`, Assembly: `Sigma16` (*legacy*))
