@@ -14,3 +14,6 @@ All codes will *never* be released anytime earlier than the end of a teaching bl
   * Assessed Exercise (HLL: `C`, Assembly: `Sigma16` (*legacy*, compatible with [Gamma16](https://github.com/loyihsu/gamma16/)))
 * Software Engineering
   * Assessed Exercise 2 (`Java`)
+* Advanced Programming
+	* Lab 1 (`Java`)
+	* Lab 2 (`Java`)
