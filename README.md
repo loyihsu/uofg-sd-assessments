@@ -17,3 +17,6 @@ All codes will *never* be released anytime earlier than the end of a teaching bl
 * Advanced Programming
 	* Lab 1 (`Java`)
 	* Lab 2 (`Java`)
+* Internet Technology
+  * tango_with_django_project (`Python` `Django`)
+  * GadgetGateway (`Python` `Django`)

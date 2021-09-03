@@ -1,3 +1,9 @@
 [submodule "SE-AE2-PTT-Management-System"]
 	path = Software Engineering (COMPSCI5059)
 	url = https://github.com/loyihsu/SE-AE2-PTT-Management-System
+[submodule "Internet Technology (COMPSCI5012)/GadgetGateway"]
+	path = Internet Technology (COMPSCI5012)/GadgetGateway
+	url = https://github.com/loyihsu/GadgetGateway
+[submodule "Internet Technology (COMPSCI5012)/tango_with_django_project"]
+	path = Internet Technology (COMPSCI5012)/tango_with_django_project
+	url = https://github.com/loyihsu/tango_with_django_project
